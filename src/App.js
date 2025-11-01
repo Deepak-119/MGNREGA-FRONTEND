@@ -16,10 +16,11 @@ function App() {
   const [offline, setOffline] = useState(false);
 
   const fetchData = async (district) => {
+    if (!district) return;
     setLoading(true);
 
     try {
-      const res = await axios.get(`https://mgnrega-backend-42rt.onrender.com/api/districts`);
+      const res = await axios.get(`https://mgnrega-backend-42rt.onrender.com/api/data/${district}`);
       setData(res.data);
       localStorage.setItem(district, JSON.stringify(res.data));
       setOffline(false);
