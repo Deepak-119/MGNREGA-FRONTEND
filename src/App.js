@@ -20,12 +20,17 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await axios.get(`https://mgnrega-backend-42rt.onrender.com/api/data/${district}`);
+      const res = await axios.get(
+        `https://mgnrega-backend-42rt.onrender.com/api/data/${district}`
+      );
+
       setData(res.data);
       localStorage.setItem(district, JSON.stringify(res.data));
       setOffline(false);
+
     } catch (err) {
       const cached = localStorage.getItem(district);
+
       if (cached) {
         setData(JSON.parse(cached));
         setOffline(true);
@@ -39,12 +44,18 @@ function App() {
 
   // ✅ Rough Auto detect
   const detectLocation = () => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const { latitude, longitude } = pos.coords;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
 
-      if (latitude > 26 && longitude > 80) fetchData("Lucknow");
-      else fetchData("Kanpur Nagar");
-    });
+        // rough logic
+        if (latitude > 26 && longitude > 80) fetchData("Lucknow");
+        else fetchData("Kanpur Nagar");
+      },
+      () => {
+        alert("Location अनुमति दें!");
+      }
+    );
   };
 
   return (
