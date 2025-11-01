@@ -19,7 +19,7 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/data/${district}`);
+      const res = await axios.get(`https://mgnrega-backend-42rt.onrender.com/api/districts`);
       setData(res.data);
       localStorage.setItem(district, JSON.stringify(res.data));
       setOffline(false);
